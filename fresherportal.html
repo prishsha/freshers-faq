@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freshers' FAQ Portal</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #4CAF50;
+            padding: 10px;
+            text-align: center;
+            color: white;
+        }
+        h1 {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Form Styles */
+        .query-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .query-form label {
+            font-weight: bold;
+        }
+
+        .query-form input, .query-form select, .query-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .query-form button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        /* Query Viewing Section */
+        .queries-list {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .query-item {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+
+        .query-item:last-child {
+            border-bottom: none;
+        }
+
+        .query-item .tags {
+            font-style: italic;
+            color: #666;
+        }
+
+        .filters {
+            margin-bottom: 20px;
+        }
+
+        .filters select {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Freshers' FAQ Portal</h1>
+</header>
+
+<div class="container">
+
+    <!-- Query Submission Form -->
+    <section class="query-form">
+        <h2>Submit Your Query</h2>
+        <form action="#" method="POST">
+            <label for="queryText">Your Query</label>
+            <textarea id="queryText" name="queryText" rows="5" placeholder="Enter your question here..." required></textarea>
+
+            <label for="tags">Choose Topic(s)</label>
+            <select id="tags" name="tags" multiple required>
+                <option value="hostel">Hostel</option>
+                <option value="campus">Campus</option>
+                <option value="food">Food</option>
+                <option value="academics">Academics</option>
+                <option value="culture">Culture</option>
+                <option value="fest">Fest</option>
+                <option value="assessment">Assessment</option>
+            </select>
+
+            <button type="submit">Submit Query</button>
+        </form>
+    </section>
+
+    <!-- Query Viewing Section -->
+    <section class="queries-list">
+        <h2>Previously Asked Queries</h2>
+
+        <div class="filters">
+            <label for="filterTopic">Filter by Topic:</label>
+            <select id="filterTopic" name="filterTopic">
+                <option value="all">All Topics</option>
+                <option value="hostel">Hostel</option>
+                <option value="food">Food</option>
+                <option value="academics">Academics</option>
+            </select>
+
+            <label for="filterStatus">Filter by Status:</label>
+            <select id="filterStatus" name="filterStatus">
+                <option value="all">All Queries</option>
+                <option value="answered">Answered</option>
+                <option value="unanswered">Unanswered</option>
+            </select>
+        </div>
+
+        <!-- Query List -->
+        <div class="query-item">
+            <p><strong>What is the hostel fee structure?</strong></p>
+            <p class="tags">Tags: Hostel, Fees</p>
+            <p>Status: <strong>Answered</strong></p>
+        </div>
+
+        <div class="query-item">
+            <p><strong>Is there a cafeteria on campus?</strong></p>
+            <p class="tags">Tags: Campus, Food</p>
+            <p>Status: <strong>Unanswered</strong></p>
+        </div>
+
+        <div class="query-item">
+            <p><strong>What subjects are part of the first semester?</strong></p>
+            <p class="tags">Tags: Academics</p>
+            <p>Status: <strong>Answered</strong></p>
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>
