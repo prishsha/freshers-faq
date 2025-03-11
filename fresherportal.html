@@ -5,72 +5,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Freshers' FAQ Portal</title>
     <style>
-        /* Global Styles */
-        body {
-            font-family: Arial, sans-serif;
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
+
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #4cc9f0;
+            --dark-color: #1d3557;
+            --light-color: #f8f9fa;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: #333;
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
         header {
-            background-color: #4CAF50;
-            padding: 10px;
-            text-align: center;
+            background-color: var(--dark-color);
             color: white;
-        }
-        h1 {
-            margin: 0;
+            padding: 1.2rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
         }
 
-        /* Form Styles */
-        .query-form {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 40px;
+        h2 {
+            color: var(--dark-color);
+            margin-bottom: 1rem;
         }
 
-        .query-form label {
-            font-weight: bold;
+        .query-form, .queries-list {
+            margin-bottom: 2rem;
         }
 
-        .query-form input, .query-form select, .query-form textarea {
+        label {
+            font-weight: 500;
+        }
+
+        input, select, textarea, button {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0 20px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
             font-size: 16px;
         }
 
-        .query-form button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
+        button {
+            background-color: var(--primary-color);
             color: white;
             border: none;
             cursor: pointer;
-            border-radius: 4px;
-            font-size: 16px;
+            transition: background 0.3s ease;
         }
 
-        /* Query Viewing Section */
-        .queries-list {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        button:hover {
+            background-color: var(--secondary-color);
         }
 
         .query-item {
+            padding: 12px;
             border-bottom: 1px solid #ddd;
-            padding: 10px 0;
         }
 
         .query-item:last-child {
@@ -79,18 +92,8 @@
 
         .query-item .tags {
             font-style: italic;
-            color: #666;
+            color: var(--accent-color);
         }
-
-        .filters {
-            margin-bottom: 20px;
-        }
-
-        .filters select {
-            padding: 10px;
-            font-size: 16px;
-        }
-
     </style>
 </head>
 <body>
@@ -100,7 +103,6 @@
 </header>
 
 <div class="container">
-
     <!-- Query Submission Form -->
     <section class="query-form">
         <h2>Submit Your Query</h2>
@@ -127,24 +129,6 @@
     <section class="queries-list">
         <h2>Previously Asked Queries</h2>
 
-        <div class="filters">
-            <label for="filterTopic">Filter by Topic:</label>
-            <select id="filterTopic" name="filterTopic">
-                <option value="all">All Topics</option>
-                <option value="hostel">Hostel</option>
-                <option value="food">Food</option>
-                <option value="academics">Academics</option>
-            </select>
-
-            <label for="filterStatus">Filter by Status:</label>
-            <select id="filterStatus" name="filterStatus">
-                <option value="all">All Queries</option>
-                <option value="answered">Answered</option>
-                <option value="unanswered">Unanswered</option>
-            </select>
-        </div>
-
-        <!-- Query List -->
         <div class="query-item">
             <p><strong>What is the hostel fee structure?</strong></p>
             <p class="tags">Tags: Hostel, Fees</p>
@@ -163,7 +147,6 @@
             <p>Status: <strong>Answered</strong></p>
         </div>
     </section>
-
 </div>
 
 </body>
