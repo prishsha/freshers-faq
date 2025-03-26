@@ -5,36 +5,143 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Freshers' FAQ Portal</title>
     <style>
-        /* Global Styles */
-        body {
-            font-family: Arial, sans-serif;
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
-        }
-        header {
-            background-color: #4CAF50;
-            padding: 10px;
-            text-align: center;
-            color: white;
-        }
-        h1 {
-            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .container {
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #4cc9f0;
+            --dark-color: #1d3557;
+            --light-color: #f8f9fa;
+            --success-color: #06d6a0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--light-color);
+            color: #333;
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        header {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        .header-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        /* Form Styles */
-        .query-form {
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 45px;
+            margin-right: 12px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover .logo-img {
+            transform: rotate(5deg) scale(1.05);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2.5rem;
+            position: relative;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+            padding: 0.5rem 0;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-container {
+            max-width: 900px;
+            width: 100%;
+            position: relative;
+            z-index: 5;
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            margin-bottom: 1.5rem;
+            font-size: 3rem;
+            color: var(--dark-color);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .query-form, .queries-list {
             background-color: white;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
         }
 
         .query-form label {
@@ -52,7 +159,7 @@
 
         .query-form button {
             padding: 10px 20px;
-            background-color: #4CAF50;
+            background-color: var(--primary-color);
             color: white;
             border: none;
             cursor: pointer;
@@ -60,26 +167,9 @@
             font-size: 16px;
         }
 
-        /* Query Viewing Section */
-        .queries-list {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .query-item {
-            border-bottom: 1px solid #ddd;
+        .queries-list .query-item {
             padding: 10px 0;
-        }
-
-        .query-item:last-child {
-            border-bottom: none;
-        }
-
-        .query-item .tags {
-            font-style: italic;
-            color: #666;
+            border-bottom: 1px solid #ddd;
         }
 
         .filters {
@@ -91,80 +181,142 @@
             font-size: 16px;
         }
 
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+            position: relative;
+            padding: 0.3rem 0;
+        }
+
+        footer a:hover {
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 2rem;
+            }
+
+            h1 {
+                font-size: 2.3rem;
+            }
+
+            .query-form input, .query-form select, .query-form textarea {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Freshers' FAQ Portal</h1>
+    <div class="header-container">
+        <div class="logo-container">
+            <img src="FRESTARST-removebg-preview.png" alt="FreshStart Logo" class="logo-img">
+            <div class="logo-text">FreshStart FAQ Portal</div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
 </header>
 
-<div class="container">
+<main>
+    <div class="main-container">
+        <h1>Freshers' FAQ Portal</h1>
 
-    <!-- Query Submission Form -->
-    <section class="query-form">
-        <h2>Submit Your Query</h2>
-        <form action="#" method="POST">
-            <label for="queryText">Your Query</label>
-            <textarea id="queryText" name="queryText" rows="5" placeholder="Enter your question here..." required></textarea>
+        <section class="query-form">
+            <h2>Submit Your Query</h2>
+            <form action="#" method="POST">
+                <label for="queryText">Your Query</label>
+                <textarea id="queryText" name="queryText" rows="5" placeholder="Enter your question here..." required></textarea>
 
-            <label for="tags">Choose Topic(s)</label>
-            <select id="tags" name="tags" multiple required>
-                <option value="hostel">Hostel</option>
-                <option value="campus">Campus</option>
-                <option value="food">Food</option>
-                <option value="academics">Academics</option>
-                <option value="culture">Culture</option>
-                <option value="fest">Fest</option>
-                <option value="assessment">Assessment</option>
-            </select>
+                <label for="tags">Choose Topic(s)</label>
+                <select id="tags" name="tags" multiple required>
+                    <option value="hostel">Hostel</option>
+                    <option value="campus">Campus</option>
+                    <option value="food">Food</option>
+                    <option value="academics">Academics</option>
+                    <option value="culture">Culture</option>
+                    <option value="fest">Fest</option>
+                    <option value="assessment">Assessment</option>
+                </select>
 
-            <button type="submit">Submit Query</button>
-        </form>
-    </section>
+                <button type="submit">Submit Query</button>
+            </form>
+        </section>
 
-    <!-- Query Viewing Section -->
-    <section class="queries-list">
-        <h2>Previously Asked Queries</h2>
+        <section class="queries-list">
+            <h2>Previously Asked Queries</h2>
 
-        <div class="filters">
-            <label for="filterTopic">Filter by Topic:</label>
-            <select id="filterTopic" name="filterTopic">
-                <option value="all">All Topics</option>
-                <option value="hostel">Hostel</option>
-                <option value="food">Food</option>
-                <option value="academics">Academics</option>
-            </select>
+            <div class="filters">
+                <label for="filterTopic">Filter by Topic:</label>
+                <select id="filterTopic" name="filterTopic">
+                    <option value="all">All Topics</option>
+                    <option value="hostel">Hostel</option>
+                    <option value="food">Food</option>
+                    <option value="academics">Academics</option>
+                </select>
 
-            <label for="filterStatus">Filter by Status:</label>
-            <select id="filterStatus" name="filterStatus">
-                <option value="all">All Queries</option>
-                <option value="answered">Answered</option>
-                <option value="unanswered">Unanswered</option>
-            </select>
+                <label for="filterStatus">Filter by Status:</label>
+                <select id="filterStatus" name="filterStatus">
+                    <option value="all">All Queries</option>
+                    <option value="answered">Answered</option>
+                    <option value="unanswered">Unanswered</option>
+                </select>
+            </div>
+
+            <div class="query-item">
+                <p><strong>What is the hostel fee structure?</strong></p>
+                <p>Status: <strong>Answered</strong></p>
+            </div>
+
+            <div class="query-item">
+                <p><strong>Is there a cafeteria on campus?</strong></p>
+                <p>Status: <strong>Unanswered</strong></p>
+            </div>
+
+            <div class="query-item">
+                <p><strong>What subjects are part of the first semester?</strong></p>
+                <p>Status: <strong>Answered</strong></p>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-links">
+            <a href="#">FAQ</a>
+            <a href="#">Privacy Policy</a>
         </div>
-
-        <!-- Query List -->
-        <div class="query-item">
-            <p><strong>What is the hostel fee structure?</strong></p>
-            <p class="tags">Tags: Hostel, Fees</p>
-            <p>Status: <strong>Answered</strong></p>
-        </div>
-
-        <div class="query-item">
-            <p><strong>Is there a cafeteria on campus?</strong></p>
-            <p class="tags">Tags: Campus, Food</p>
-            <p>Status: <strong>Unanswered</strong></p>
-        </div>
-
-        <div class="query-item">
-            <p><strong>What subjects are part of the first semester?</strong></p>
-            <p class="tags">Tags: Academics</p>
-            <p>Status: <strong>Answered</strong></p>
-        </div>
-    </section>
-
-</div>
+    </div>
+</footer>
 
 </body>
 </html>
