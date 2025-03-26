@@ -9,7 +9,8 @@ const PORT = 5000;
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // For form data
-//app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 // MongoDB Connection
 mongoose.connect("mongodb://127.0.0.1:27017/FreshStart")
