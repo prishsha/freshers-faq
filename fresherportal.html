@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freshers' FAQ Portal</title>
+    <title>FreshStart - Freshers' FAQ Portal</title>
     <style>
+<<<<<<< HEAD
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         
+=======
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+>>>>>>> 09c23c8e0d0c1944dbf420013dbd9cec10d89fa4
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+<<<<<<< HEAD
             font-family: 'Poppins', sans-serif;
         }
 
@@ -142,45 +149,206 @@
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             margin-bottom: 20px;
+=======
+            font-family: 'Inter', sans-serif;
         }
 
-        .query-form label {
-            font-weight: bold;
+        :root {
+            --gradient-blue-start: #4361ee;
+            --gradient-blue-end: #3a0ca3;
+            --accent-color: #4cc9f0;
+            --primary-dark-blue: #1d3557;
+            --background-light-blue: #f8f9fa;
+            --light-text: #06d6a0;
         }
 
-        .query-form input, .query-form select, .query-form textarea {
+        body {
+            background-color: var(--background-light-blue);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        /* Navbar Styles */
+        .navbar {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0 20px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background-color: var(--primary-dark-blue);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 45px;
+            margin-right: 12px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+            transition: transform 0.3s ease;
+        }
+
+        .site-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #4cc9f0, #4361ee);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            width: 80%;
+            max-width: 900px;
+            margin-top: 6rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(29, 78, 216, 0.1);
+            z-index: 5;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            z-index: 1;
+>>>>>>> 09c23c8e0d0c1944dbf420013dbd9cec10d89fa4
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background-color: #4361ee;
+            top: -100px;
+            left: -100px;
+        }
+
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: #4cc9f0;
+            bottom: -50px;
+            right: 100px;
+        }
+
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #06d6a0;
+            bottom: -350px;
+            left: -5px;
+        }
+
+        h2 {
+            color: var(--primary-dark-blue);
+            margin-bottom: 1rem;
+        }
+
+        .query-form label,
+        .query-list label {
+            font-weight: 600;
+            color: var(--primary-dark-blue);
+            margin-top: 1rem;
+            display: block;
+        }
+
+        input,
+        textarea,
+        select,
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
             font-size: 16px;
         }
 
+<<<<<<< HEAD
         .query-form button {
             padding: 10px 20px;
             background-color: var(--primary-color);
+=======
+        button {
+            background: linear-gradient(45deg, #3a0ca3, #06d6a0);
+>>>>>>> 09c23c8e0d0c1944dbf420013dbd9cec10d89fa4
             color: white;
             border: none;
             cursor: pointer;
-            border-radius: 4px;
-            font-size: 16px;
+            transition: opacity 0.3s ease;
+            margin-top: 1rem;
+            font-weight: 600;
         }
 
+<<<<<<< HEAD
         .queries-list .query-item {
             padding: 10px 0;
             border-bottom: 1px solid #ddd;
+=======
+        button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            opacity: 0.8;
         }
 
-        .filters {
-            margin-bottom: 20px;
+        .query-list {
+            margin-top: 2rem;
         }
 
-        .filters select {
-            padding: 10px;
-            font-size: 16px;
+        .query-item {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 8px rgba(29, 78, 216, 0.1);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            position: relative;
         }
 
+        .query-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .query-item .status {
+            font-size: 0.9rem;
+            color: var(--light-text);
+            font-weight: 500;
+>>>>>>> 09c23c8e0d0c1944dbf420013dbd9cec10d89fa4
+        }
+
+        .query-item .answer {
+            max-height: 0;
+            overflow: hidden;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            background: #F7FAFC;
+            padding: 0;
+            border-radius: 6px;
+            margin-top: 0.5rem;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .query-item:hover .answer {
+            max-height: 200px;
+            padding: 0.5rem;
+        }
+
+<<<<<<< HEAD
         footer {
             background-color: var(--dark-color);
             color: white;
@@ -226,10 +394,23 @@
             .query-form input, .query-form select, .query-form textarea {
                 font-size: 14px;
             }
+=======
+        .filter-sort {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-sort select {
+            width: 48%;
+>>>>>>> 09c23c8e0d0c1944dbf420013dbd9cec10d89fa4
         }
     </style>
 </head>
+
 <body>
+<<<<<<< HEAD
 
 <header>
     <div class="header-container">
@@ -317,6 +498,76 @@
         </div>
     </div>
 </footer>
+=======
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="FRESTARST-removebg-preview.png" alt="FreshStart Logo" class="logo-img">
+            <div class="site-name">FreshStart</div>
+        </div>
+    </nav>
 
+    <div class="container">
+        <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        <section class="query-form">
+            <h2>Submit Your Query</h2>
+            <form>
+                <label for="queryText">Your Query</label>
+                <textarea id="queryText" rows="4" placeholder="Enter your question here..."></textarea>
+
+                <label for="category">Choose Category</label>
+                <select id="category">
+                    <option value="hostel">Hostel</option>
+                    <option value="campus">Campus</option>
+                    <option value="food">Food</option>
+                    <option value="academics">Academics</option>
+                    <option value="culture">Culture</option>
+                    <option value="fest">Fest</option>
+                    <option value="assessment">Assessment</option>
+                </select>
+
+                <button type="submit">Submit Query</button>
+            </form>
+        </section>
+    </div>
+
+    <div class="container">
+        <section class="query-list">
+            <h2>Previously Asked Queries</h2>
+>>>>>>> 09c23c8e0d0c1944dbf420013dbd9cec10d89fa4
+
+            <div class="filter-sort">
+                <select id="sortOptions">
+                    <option value="latest">Sort by Latest</option>
+                    <option value="oldest">Sort by Oldest</option>
+                </select>
+
+                <select id="filterOptions">
+                    <option value="all">All Categories</option>
+                    <option value="hostel">Hostel</option>
+                    <option value="campus">Campus</option>
+                    <option value="food">Food</option>
+                    <option value="academics">Academics</option>
+                    <option value="culture">Culture</option>
+                    <option value="fest">Fest</option>
+                    <option value="assessment">Assessment</option>
+                </select>
+            </div>
+
+            <div class="query-item">
+                <p><strong>What is the hostel fee structure?</strong></p>
+                <p class="status">Status: Answered</p>
+                <p class="answer">The hostel fee structure varies based on the type of room and amenities. Check the
+                    official college website for details.</p>
+            </div>
+
+            <div class="query-item">
+                <p><strong>Is there a cafeteria on campus?</strong></p>
+                <p class="status">Status: Unanswered</p>
+            </div>
+        </section>
+    </div>
 </body>
+
 </html>
