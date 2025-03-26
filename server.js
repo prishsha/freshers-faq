@@ -40,12 +40,17 @@ app.post('/sign-in', async (req, res) => {
 
   try {
     const result = await seedUser('New User', email, password);
-    res.send(`
-      <script>
-        alert('${result.message}');
-        window.location.href = '/sign-in';
-      </script>
-    `);
+    
+    if (result.message === 'User created successfully!') {
+      return res.redirect('/senior-portal'); // Redirect on success
+    } else {
+      return res.send(`
+        <script>
+          alert('${result.message}');
+          window.location.href = '/login';
+        </script>
+      `);
+    }
   } catch (error) {
     res.status(500).send(`
       <script>
@@ -55,6 +60,12 @@ app.post('/sign-in', async (req, res) => {
     `);
   }
 });
+
+// Serve the senior portal page
+app.get('/senior-portal', function(req, res) {
+  res.sendFile(path.join(__dirname, 'senior-portal.html'));
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
