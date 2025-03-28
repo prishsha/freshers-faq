@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const User = require('./models/userModel.js');
 
-const seedUser = async (name, email, password) => {
+const seedUser = async (email, password) => {
   try {
     // Check if the user already exists
     const existingUser = await User.findOne({ email });
@@ -11,7 +11,7 @@ const seedUser = async (name, email, password) => {
 
     // Hash the password using bcrypt
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ name, email, password: hashedPassword });
+    const newUser = new User({email, password: hashedPassword });
 
     await newUser.save();
     return { message: 'User created successfully!' };

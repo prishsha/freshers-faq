@@ -196,7 +196,7 @@
         <div class="shape shape-2"></div>
 
         <h1>Login to FreshStart</h1>
-        <form id="login-form">
+        <form id="login-form" action="/login" method="POST">
             <input type="email" id="email" name="email" placeholder="Enter your email" required />
             <input type="password" id="password" name="password" placeholder="Enter your password" required />
             <button type="submit">Login</button>
@@ -204,6 +204,41 @@
 
         <a href="/sign-in" class="forgot-password">New user? Register now</a>
     </main>
+
+    <script>
+        const form = document.getElementById('login-form');
+        
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+      
+          const email = document.getElementById('email').value.trim();
+          const password = document.getElementById('password').value.trim();
+      
+          try {
+            const response = await fetch('/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email, password }),
+            });
+      
+            const result = await response.json();
+      
+            console.log(result.message);
+            if (response.ok) {
+              alert('Login successful!');
+              window.location.href = '/senior-portal'; // Redirect to senior page on success
+            } 
+            else
+            {
+              alert(result.message || 'Login failed!');
+              window.location.href = '/login'; // Redirect back to login page on failure
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+          }
+        });
+      </script>
 </body>
 </html>
 

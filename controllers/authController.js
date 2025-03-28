@@ -1,37 +1,41 @@
-// Import required modules
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
+require('dotenv').config();
 
-// Login controller
 const authController = async (req, res) => {
   const { email, password } = req.body;
 
-  try 
-  {
-    //check if user exists
+  try {
+    if (!process.env.JWT_SECRET) {
+      throw new Error('JWT_SECRET is not defined in environment variables');
+    }
+
     const user = await User.findOne({ email });
-    if (!user) 
-    {
+    if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    //check is password is valid
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) 
+    if(!(await testAndCompare(password, user.password)))
     {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // generate JWT token
+    // Generate JWT token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    res.status(200).json({ message: 'Login successful', token });
-  } 
-  catch (error) 
-  {
-    res.status(500).json({ message: 'Server error', error });
+    res.status(200).json({ message: 'Login successful', token});
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
-module.exports=authController;
+const testAndCompare = async (password, hashedPassword) => {
+  
+  //console.log('Hashed Password:', hashedPassword);
+  const isMatch = await bcrypt.compare(password, hashedPassword);
+  //console.log('Password Match:', isMatch);
+  return isMatch;
+};
+
+module.exports = authController;
