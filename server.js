@@ -91,15 +91,28 @@ app.get('/fresher-portal/api', async (req, res) => {
   }
 });
 
+app.get('/senior-portal/api', async (req, res) => {
+  try {
+    const queries = await Query.find({ status: 'Unanswered' });
+    res.json(queries);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching queries' });
+  }
+});
+
 app.post('/fresher-portal/api/answer', async (req, res) => {
   try {
-    const { message, answer } = req.body;
+    const { id, answer } = req.body;
 
-    if (!message || !answer) {
-      return res.status(400).json({ message: 'Missing message or answer' });
+    if (!answer) {
+      return res.status(400).json({ message: 'Missing answer' });
     }
 
-    const query = await Query.findOne({ message });
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'Invalid query ID' });
+    }
+
+    const query = await Query.findOne({_id : id});
 
     if (!query) {
       return res.status(404).json({ message: 'Query not found' });

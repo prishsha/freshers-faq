@@ -176,7 +176,7 @@
     <script>
         async function fetchQueries() {
             try {
-                const response = await fetch('/fresher-portal/api');
+                const response = await fetch('/senior-portal/api');
                 const queries = await response.json();
 
                 const tableBody = document.getElementById("queryTable");
@@ -193,7 +193,7 @@
                                 <button onclick="showAnswerBox('${query._id}', ${index}, this)">Answer</button>
                                 <div id="answerBox-${index}" style="display:none;">
                                     <input type="text" class="answer-box" id="answerInput-${index}" placeholder="Type your answer here...">
-                                    <button onclick="submitAnswer(${query._id}, ${index})">Submit</button>
+                                    <button onclick="submitAnswer('${query._id}', ${index})">Submit</button>
                                     <div id="successMessage-${index}" class="success-message" style="display:none;">Successfully answered!</div>
                                 </div>
                             </td>
@@ -226,7 +226,7 @@
                 const response = await fetch('/fresher-portal/api/answer', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ _id: queryId, answer }),
+                    body: JSON.stringify({ id: queryId, answer }),
                 });
 
                 if (!response.ok) {
