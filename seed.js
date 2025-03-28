@@ -6,17 +6,23 @@ const seedUser = async (email, password) => {
     // Check if the user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
+      console.log('User already exists. Please log in.');
       return { message: 'User already exists. Please log in.' };
     }
 
     // Hash the password using bcrypt
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({email, password: hashedPassword });
+
+    // Create and save the user
+    const newUser = new User({ email, password: hashedPassword });
 
     await newUser.save();
+    console.log('User seeded with hashed password');
+
     return { message: 'User created successfully!' };
   } catch (error) {
-    throw new Error('Error seeding user: ' + error.message);
+    console.error('Error seeding user:', error.message);
+    return { error: 'Error seeding user: ' + error.message };
   }
 };
 

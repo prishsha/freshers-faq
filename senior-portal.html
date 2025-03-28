@@ -1,11 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Senior Queries</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --primary-color: #4361ee;
@@ -30,14 +31,13 @@
             background-color: var(--light-color);
             color: #333;
             background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            overflow: hidden;
         }
 
         header {
             background-color: var(--dark-color);
             color: white;
             padding: 1.2rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             position: relative;
             z-index: 10;
         }
@@ -105,19 +105,20 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
-        
-        th, td {
+
+        th,
+        td {
             border: 1px solid #ddd;
             padding: 15px;
             text-align: left;
         }
-        
+
         th {
             background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
             color: white;
             font-size: 1.2rem;
         }
-        
+
         button {
             padding: 10px 20px;
             background: linear-gradient(45deg, var(--secondary-color), var(--success-color));
@@ -128,7 +129,7 @@
             font-size: 1rem;
             transition: 0.3s;
         }
-        
+
         button:hover {
             transform: scale(1.05);
         }
@@ -148,6 +149,7 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <div class="header-container">
@@ -162,7 +164,7 @@
                 <thead>
                     <tr>
                         <th>Query</th>
-                        <th>Asked By</th>
+                        <th>Category</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -172,49 +174,76 @@
     </main>
 
     <script>
-        const queries = [
-            { question: "What are the hostel rules?", askedBy: "Student1" },
-            { question: "How is the mess food quality?", askedBy: "Student2" }
-        ];
+        async function fetchQueries() {
+            try {
+                const response = await fetch('/fresher-portal/api');
+                const queries = await response.json();
 
-        function loadQueries() {
-            const tableBody = document.getElementById("queryTable");
-            tableBody.innerHTML = "";
-            
-            queries.forEach((query, index) => {
-                const row = `<tr>
-                    <td>${query.question}</td>
-                    <td>${query.askedBy}</td>
-                    <td>
-                        <button onclick="showAnswerBox(${index}, this)">Answer</button>
-                        <div id="answerBox-${index}" style="display:none;">
-                            <input type="text" class="answer-box" id="answerInput-${index}" placeholder="Type your answer here...">
-                            <button onclick="submitAnswer(${index})">Submit</button>
-                            <div id="successMessage-${index}" class="success-message" style="display:none;">Successfully answered!</div>
-                        </div>
-                    </td>
-                </tr>`;
-                tableBody.innerHTML += row;
-            });
+                const tableBody = document.getElementById("queryTable");
+                tableBody.innerHTML = "";
+
+                queries.forEach((query, index) => {
+                    if (query.status === "Unanswered") 
+                    console.log(query);
+                    {
+                        const row = `<tr>
+                            <td>${query.message}</td>
+                            <td>${query.category}</td>
+                            <td>
+                                <button onclick="showAnswerBox('${query._id}', ${index}, this)">Answer</button>
+                                <div id="answerBox-${index}" style="display:none;">
+                                    <input type="text" class="answer-box" id="answerInput-${index}" placeholder="Type your answer here...">
+                                    <button onclick="submitAnswer(${query._id}, ${index})">Submit</button>
+                                    <div id="successMessage-${index}" class="success-message" style="display:none;">Successfully answered!</div>
+                                </div>
+                            </td>
+                        </tr>`;
+                        tableBody.innerHTML += row;
+                    }
+                });
+            } catch (error) {
+                console.error('Error fetching queries:', error);
+            }
         }
 
-        function showAnswerBox(index, button) {
+        fetchQueries();
+
+        function showAnswerBox(queryId, index, button) {
             button.style.display = "none";
             document.getElementById(`answerBox-${index}`).style.display = "block";
         }
 
-        function submitAnswer(index) {
+        async function submitAnswer(queryId, index) {
             const inputField = document.getElementById(`answerInput-${index}`);
-            if (inputField.value.trim() !== "") {
+            const answer = inputField.value.trim();
+
+            if (!answer) {
+                alert('Please enter an answer');
+                return;
+            }
+
+            try {
+                const response = await fetch('/fresher-portal/api/answer', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ _id: queryId, answer }),
+                });
+
+                if (!response.ok) {
+                    const errorMessage = await response.json();
+                    throw new Error(errorMessage.message || 'Failed to submit answer');
+                }
+
                 document.getElementById(`answerBox-${index}`).style.display = "none";
                 document.getElementById(`successMessage-${index}`).style.display = "block";
+
+            } catch (error) {
+                console.error('Error submitting answer:', error);
+                alert('An error occurred. Please try again.');
             }
         }
 
-        window.onload = loadQueries;
     </script>
 </body>
+
 </html>
-
-
-

@@ -7,7 +7,7 @@
     <title>FreshStart - Freshers' FAQ Portal</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
+
         * {
             margin: 0;
             padding: 0;
@@ -220,16 +220,16 @@
 
     <div class="container">
         <div class="shape shape-1"></div>
-            <div class="shape shape-2"></div>
-            <div class="shape shape-3"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
         <section class="query-form">
             <h2>Submit Your Query</h2>
-            <form>
-                <label for="queryText">Your Query</label>
-                <textarea id="queryText" rows="4" placeholder="Enter your question here..."></textarea>
+            <form action="/fresher-portal" method="post" id="form">
+                <label for="message">Your Query</label>
+                <textarea id="queryText" rows="4" placeholder="Enter your question here..." name="message" required></textarea>
 
                 <label for="category">Choose Category</label>
-                <select id="category">
+                <select id="category" name="category" required>
                     <option value="hostel">Hostel</option>
                     <option value="campus">Campus</option>
                     <option value="food">Food</option>
@@ -245,7 +245,7 @@
     </div>
 
     <div class="container">
-        <section class="query-list">
+        <section class="query-list" id="queryContainer">
             <h2>Previously Asked Queries</h2>
 
             <div class="filter-sort">
@@ -279,6 +279,67 @@
             </div>
         </section>
     </div>
+
+    <script>
+
+        async function fetchQueries() {
+            try {
+                const response = await fetch('/fresher-portal/api');
+                const queries = await response.json();
+
+                const container = document.getElementById('queryContainer');
+                container.innerHTML = ''; // Clear previous content
+
+                queries.forEach(query => {
+                    const queryItem = document.createElement('div');
+                    queryItem.className = 'query-item';
+                    queryItem.innerHTML = `
+                    <p><strong>${query.message}</strong></p>
+                    <p class="status">Status: ${query.status}</p>
+                    ${query.status === 'Answered' ? `<p class="answer">${query.answer}</p>` : ''}
+                    `;
+                    container.appendChild(queryItem);
+                });
+
+            } catch (error) {
+                console.error('Error fetching queries:', error);
+            }
+        }
+
+        fetchQueries();
+
+        const form = document.getElementById('form');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const message = document.getElementById('queryText').value.trim();
+            const category = document.getElementById('category').value.trim();
+
+            try {
+                const response = await fetch('/fresher-portal', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message, category }),
+                });
+
+                const result = await response.json();
+
+                console.log(result.message);
+                if (response.ok) {
+                    alert('Query submitted successfully');
+                    window.location.href = '/fresher-portal';
+                }
+                else {
+                    alert(result.message || 'Failed to submit quert');
+                    window.location.href = '/login';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            }
+        });
+    </script>
 </body>
 
 </html>
