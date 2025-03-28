@@ -266,6 +266,10 @@
                 </select>
             </div>
 
+            <div class="queries-list">
+
+            </div>
+
         </section>
     </div>
 
@@ -276,7 +280,7 @@
                 const response = await fetch('/fresher-portal/api');
                 const queries = await response.json();
 
-                const container = document.getElementById('queryContainer');
+                const container = document.querySelector('.queries-list');
                 container.innerHTML = ''; // Clear previous content
 
                 queries.forEach(query => {
