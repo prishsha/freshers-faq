@@ -346,6 +346,38 @@
 
         fetchQueries();
 
+        const form = document.getElementById('form');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const message = document.getElementById('queryText').value.trim();
+            const category = document.getElementById('category').value.trim();
+
+            try {
+                const response = await fetch('/fresher-portal', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message, category }),
+                });
+
+                const result = await response.json();
+
+                console.log(result.message);
+                if (response.ok) {
+                    alert('Query submitted successfully');
+                    window.location.href = '/fresher-portal';
+                }
+                else {
+                    alert(result.message || 'Failed to submit quert');
+                    window.location.href = '/login';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            }
+        });
+
     </script>
 </body>
 
