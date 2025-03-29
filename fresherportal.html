@@ -222,11 +222,13 @@
         <div class="shape shape-1"></div>
         <div class="shape shape-2"></div>
         <div class="shape shape-3"></div>
+
         <section class="query-form">
             <h2>Submit Your Query</h2>
             <form action="/fresher-portal" method="post" id="form">
                 <label for="message">Your Query</label>
-                <textarea id="queryText" rows="4" placeholder="Enter your question here..." name="message" required></textarea>
+                <textarea id="queryText" rows="4" placeholder="Enter your question here..." name="message"
+                    required></textarea>
 
                 <label for="category">Choose Category</label>
                 <select id="category" name="category" required>
@@ -279,59 +281,71 @@
             try {
                 const response = await fetch('/fresher-portal/api');
                 const queries = await response.json();
-
-                const container = document.querySelector('.queries-list');
-                container.innerHTML = ''; // Clear previous content
-
-                queries.forEach(query => {
-                    const queryItem = document.createElement('div');
-                    queryItem.className = 'query-item';
-                    queryItem.innerHTML = `
-                    <p><strong>${query.message}</strong></p>
-                    <p class="status">Status: ${query.status}</p>
-                    ${query.status === 'Answered' ? `<p class="answer">${query.answer}</p>` : ''}
-                    `;
-                    container.appendChild(queryItem);
-                });
-
+                renderQueries(queries);
             } catch (error) {
                 console.error('Error fetching queries:', error);
             }
         }
 
+        function renderQueries(queries) {
+            const container = document.querySelector('.queries-list');
+            container.innerHTML = ''; 
+
+            queries.forEach(query => {
+                const queryItem = document.createElement('div');
+                queryItem.className = 'query-item';
+                queryItem.setAttribute('data-category', query.category);
+                queryItem.setAttribute('data-date', query.createdAt);
+
+                queryItem.innerHTML = `
+            <p><strong>${query.message}</strong></p>
+            <p class="status">Status: ${query.status}</p>
+            ${query.status === 'Answered' ? `<p class="answer">${query.answer}</p>` : ''}
+        `;
+
+                container.appendChild(queryItem);
+            });
+        }
+
+        // Sorting function
+        function sortQueries(order) {
+            const container = document.querySelector('.queries-list');
+            const queries = Array.from(container.children);
+
+            queries.sort((a, b) => {
+                const dateA = new Date(a.getAttribute('data-date'));
+                const dateB = new Date(b.getAttribute('data-date'));
+
+                return order === 'latest' ? dateB - dateA : dateA - dateB;
+            });
+
+            queries.forEach(query => container.appendChild(query)); // Reattach sorted elements
+        }
+
+        // Filtering function
+        function filterQueries(category) {
+            const queries = document.querySelectorAll('.query-item');
+
+            queries.forEach(query => {
+                if (category === 'all' || query.getAttribute('data-category') === category) {
+                    query.style.display = 'block';
+                } else {
+                    query.style.display = 'none';
+                }
+            });
+        }
+
+        // Event listeners for sorting and filtering
+        document.getElementById('sortOptions').addEventListener('change', (e) => {
+            sortQueries(e.target.value);
+        });
+
+        document.getElementById('filterOptions').addEventListener('change', (e) => {
+            filterQueries(e.target.value);
+        });
+
         fetchQueries();
 
-        const form = document.getElementById('form');
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const message = document.getElementById('queryText').value.trim();
-            const category = document.getElementById('category').value.trim();
-
-            try {
-                const response = await fetch('/fresher-portal', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message, category }),
-                });
-
-                const result = await response.json();
-
-                console.log(result.message);
-                if (response.ok) {
-                    alert('Query submitted successfully');
-                    window.location.href = '/fresher-portal';
-                }
-                else {
-                    alert(result.message || 'Failed to submit quert');
-                    window.location.href = '/login';
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred. Please try again.');
-            }
-        });
     </script>
 </body>
 
