@@ -3,11 +3,15 @@ const mongoose = require('mongoose');
 const seedUser = require('./seed');
 const authController = require('./controllers/authController');
 const path = require('path');
+const dotenv = require('dotenv');
 const queryController = require('./controllers/queryController');
 const Query = require('./models/queryModel');
 
 const app = express();
 const PORT = 5000;
+
+dotenv.config();
+const mongoURI = process.env.MONGO_URI;
 
 // Middleware
 app.use(express.json());
@@ -17,7 +21,7 @@ app.use(express.urlencoded({ extended: true })); // For form data
 app.use(express.static(path.join(__dirname, 'public')));
 
 // MongoDB Connection
-mongoose.connect("mongodb://127.0.0.1:27017/FreshStart")
+mongoose.connect("mongodb+srv://prishavadhavkar:prishasansamosapath@freshstart.mzffjsy.mongodb.net/")
   .then(() => console.log("Connected to MongoDB"))
   .catch((error) => console.log("MongoDB connection error:", error));
 
