@@ -3,15 +3,11 @@ const mongoose = require('mongoose');
 const seedUser = require('./seed');
 const authController = require('./controllers/authController');
 const path = require('path');
-const dotenv = require('dotenv');
 const queryController = require('./controllers/queryController');
 const Query = require('./models/queryModel');
 
 const app = express();
 const PORT = 5000;
-
-dotenv.config();
-const mongoURI = process.env.MONGO_URI;
 
 // Middleware
 app.use(express.json());
